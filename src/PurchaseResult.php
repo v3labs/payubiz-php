@@ -2,7 +2,7 @@
 
 namespace V3labs\PayUbiz;
 
-class CompletePurchaseResponse
+class PurchaseResult
 {
     const STATUS_COMPLETED = 'Completed';
     const STATUS_PENDING   = 'Pending';

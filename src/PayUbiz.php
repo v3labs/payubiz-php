@@ -7,16 +7,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PayUbiz
 {
-    const PRODUCTION_URL = 'https://secure.payu.in/_payment.php';
-    const TEST_URL       = 'https://test.payu.in/_payment.php';
+    const TEST_URL = 'https://test.payu.in/_payment.php';
 
-    /** @var string */
+    const PRODUCTION_URL = 'https://secure.payu.in/_payment.php';
+
+    /**
+     * @var string
+     */
     private $merchantId;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $secretKey;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $testMode;
 
     /**
@@ -102,7 +109,7 @@ class PayUbiz
      * @return Response
      * @throws \InvalidArgumentException
      */
-    public function purchase(array $params)
+    public function initializePurchase(array $params)
     {
         $requiredParams = ['txnid', 'amount', 'firstname', 'email', 'phone', 'productinfo', 'surl', 'furl'];
 
@@ -121,9 +128,11 @@ class PayUbiz
             $output .= sprintf('<input type="hidden" name="%s" value="%s" />', $key, $value);
         }
 
-        $output .= '<input id="payment_form_submit" type="submit" value="Proceed to PayUbiz" />
+        $output .= '<div id="redirect_info" style="display: none">Redirecting...</div>
+                <input id="payment_form_submit" type="submit" value="Proceed to PayUbiz" />
             </form>
             <script>
+                document.getElementById(\'redirect_info\').style.display = \'block\';
                 document.getElementById(\'payment_form_submit\').style.display = \'none\';
                 document.getElementById(\'payment_form\').submit();
             </script>';
@@ -135,6 +144,6 @@ class PayUbiz
 
     public function completePurchase(array $params)
     {
-        return new CompletePurchaseResponse($this, $params);
+        return new PurchaseResult($this, $params);
     }
 }

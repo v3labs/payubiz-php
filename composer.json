@@ -1,25 +1,25 @@
 {
   "name": "v3labs/payubiz",
   "description": "PayUbiz library for PHP",
-  "keywords": ["payu", "payubiz"],
+  "keywords": ["payu", "payuindia", "payubiz"],
+  "homepage": "http://github.com/v3labs/payubiz-php",
+  "type": "library",
   "license": "MIT",
   "authors": [
     {
       "name": "Vladislav Veselinov",
-      "email": "vladislav@v3labs.com"
+      "email": "vladislav@v3labs.com",
+      "homepage": "http://github.com/v3labs"
     }
   ],
-  "require": {
-    "php": ">=5.4.0",
-    "symfony/options-resolver": "~2.6",
-    "symfony/http-foundation": "~2.6"
-  },
-  "require-dev": {
-
-  },
   "autoload": {
     "psr-4": {
       "V3labs\\PayUbiz\\": "src/"
     }
+  },
+  "require": {
+    "php": ">=5.4.0",
+    "symfony/options-resolver": "~2.6",
+    "symfony/http-foundation": "~2.6"
   }
 }

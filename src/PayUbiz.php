@@ -102,50 +102,41 @@ class PayUbiz
     /**
      * @param array $params
      * @return Response
+     * @throws \InvalidArgumentException
      */
     public function purchase(array $params)
     {
         $requiredParams = ['txnid', 'amount', 'firstname', 'email', 'phone', 'productinfo', 'surl', 'furl'];
 
-        $params = array_merge(
-            $this->sanitizeParams($params),
-            ['hash' => $this->getChecksum($params), 'key' => $this->getMerchantId()]
-        );
+        foreach ($requiredParams as $requiredParam) {
+            if (!isset($params[$requiredParam])) {
+                throw new \InvalidArgumentException(sprintf('"%s" is a required param.', $requiredParam));
+            }
+        }
 
-        $params = array_map(
-            function($param) { return htmlentities($param, ENT_QUOTES, 'UTF-8', false); },
-            $params
-        );
+        $params = array_merge($params, ['hash' => $this->getChecksum($params), 'key' => $this->getMerchantId()]);
+        $params = array_map(function($param) { return htmlentities($param, ENT_QUOTES, 'UTF-8', false); }, $params);
 
         $output = sprintf('<form id="payment_form" method="POST" action="%s">', $this->getServiceUrl());
 
         foreach ($params as $key => $value) {
-            $output .= sprintf('<input type="text" name="%s" value="%s" />', $key, $value);
+            $output .= sprintf('<input type="hidden" name="%s" value="%s" />', $key, $value);
         }
 
-        $output .= '<input id="payment_form_submit" type="submit" value="Proceed to PayUbiz" />' .
-            '</form>' .
-            '<script>
+        $output .= '<input id="payment_form_submit" type="submit" value="Proceed to PayUbiz" />
+            </form>
+            <script>
                 document.getElementById(\'payment_form_submit\').style.display = \'none\';
                 document.getElementById(\'payment_form\').submit();
             </script>';
 
-        return new Response($output);
+        return Response::create($output, 200, [
+            'Content-type' => 'text/html; charset=utf-8'
+        ]);
     }
 
     public function completePurchase(array $params)
     {
         return new CompletePurchaseResponse($this, $params);
-    }
-
-    private function sanitizeParams(array $params)
-    {
-        foreach (['address1', 'address2', 'city', 'state', 'country', 'productinfo', 'email', 'phone'] as $field) {
-            if (isset($params[$field])) {
-                $params[$field] = preg_replace('/[^a-zA-Z0-9\-_@\/\s.]/', '', $params[$field]);
-            }
-        }
-
-        return $params;
     }
 }

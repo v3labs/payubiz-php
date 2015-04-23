@@ -80,6 +80,17 @@ class CompletePurchaseResponse
      */
     public function checksumIsValid()
     {
-        return false;
+        $checksumParams = array_reverse(array_merge(['key'], $this->client->getChecksumParams(), ['status', 'salt']));
+
+        $params = array_merge($this->params, ['salt' => $this->client->getSecretKey()]);
+
+        $values = array_map(
+            function($paramName) use ($params) {
+                return array_key_exists($paramName, $params) ? $params[$paramName] : '';
+            },
+            $checksumParams
+        );
+
+        return hash('sha512', implode('|', $values)) === $this->getChecksum();
     }
 }

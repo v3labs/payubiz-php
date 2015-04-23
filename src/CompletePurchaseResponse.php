@@ -56,7 +56,7 @@ class CompletePurchaseResponse
      */
     public function getTransactionId()
     {
-        return array_key_exists('mihpayid', $this->params) ? (string)$this->params['mihpayid'] : null;
+        return isset($this->params['mihpayid']) ? (string)$this->params['mihpayid'] : null;
     }
 
     /**
@@ -64,7 +64,7 @@ class CompletePurchaseResponse
      */
     public function getTransactionStatus()
     {
-        return array_key_exists('status', $this->params) ? (string)$this->params['status'] : null;
+        return isset($this->params['status']) ? (string)$this->params['status'] : null;
     }
 
     /**
@@ -72,7 +72,7 @@ class CompletePurchaseResponse
      */
     public function getChecksum()
     {
-        return array_key_exists('hash', $this->params) ? (string)$this->params['hash'] : null;
+        return isset($this->params['hash']) ? (string)$this->params['hash'] : null;
     }
 
     /**

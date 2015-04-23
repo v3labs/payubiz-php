@@ -88,9 +88,7 @@ class PayUbiz
     private function getChecksum(array $params)
     {
         $values = array_map(
-            function($field) use ($params) {
-                return array_key_exists($field, $params) ? $params[$field] : '';
-            },
+            function($field) use ($params) { return isset($params[$field]) ? $params[$field] : ''; },
             $this->getChecksumParams()
         );
 

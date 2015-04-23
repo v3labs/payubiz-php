@@ -1,6 +1,6 @@
 {
   "name": "v3labs/payubiz",
-  "description": "PayUbiz client for PHP",
+  "description": "PayUbiz library for PHP",
   "keywords": ["payu", "payubiz"],
   "license": "MIT",
   "authors": [

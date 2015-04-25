@@ -66,7 +66,7 @@ $payubiz = new PayUbiz([
 
 $result = $payubiz->completePurchase($_POST);
 
-if ($result->checksumIsValid() && $result->getStatus() === PayUbiz::STATUS_COMPLETED {
+if ($result->checksumIsValid() && $result->getStatus() === PayUbiz::STATUS_COMPLETED) {
   print 'Payment was successful.';
 } else {
   print 'Payment was not successful.';

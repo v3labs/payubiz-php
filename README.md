@@ -19,8 +19,8 @@ You'll find a minimal usage example below.
 ### Initialize purchase
 
 ```php
-// purchase
 <?php
+// purchase.php
 
 use V3labs\PayUbiz\PayUbiz;
 
@@ -51,8 +51,8 @@ $client->initializePurchase($params)->send();
 ### Finalize purchase
 
 ```php
-// return.php
 <?php
+// return.php
 
 use V3labs\PayUbiz\PayUbiz;
 

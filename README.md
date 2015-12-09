@@ -8,7 +8,7 @@ To add this library to your project, simply add a dependency on `v3labs/payubiz`
 
     {
         "require": {
-            "v3labs/payubiz": "~0.5"
+            "v3labs/payubiz": "^0.3"
         }
     }
     
